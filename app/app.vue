@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import { projects } from './data/projects'
+</script>
+
 <template>
   <main class="page-shell">
     <NuxtRouteAnnouncer />
@@ -52,6 +56,31 @@
 
         <a class="resume-button" href="/resume.pdf" download>
           下载简历
+        </a>
+      </div>
+    </section>
+
+    <section class="projects" aria-labelledby="projects-title">
+      <div class="projects-heading">
+        <p class="section-kicker">Projects</p>
+        <h2 id="projects-title">项目入口</h2>
+      </div>
+
+      <div class="project-list">
+        <a
+          v-for="project in projects"
+          :key="project.title"
+          class="project-card"
+          :href="project.href"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span class="project-status">{{ project.status }}</span>
+          <strong>{{ project.title }}</strong>
+          <span class="project-description">{{ project.description }}</span>
+          <span class="project-tags">
+            <span v-for="tag in project.tags" :key="tag">{{ tag }}</span>
+          </span>
         </a>
       </div>
     </section>
@@ -215,6 +244,85 @@ h1 span {
   padding-top: 36px;
 }
 
+.projects {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 760px);
+  gap: clamp(48px, 8vw, 120px);
+  align-items: start;
+  padding-top: clamp(72px, 10vw, 132px);
+}
+
+.projects-heading h2 {
+  margin-bottom: 0;
+}
+
+.project-list {
+  display: grid;
+  gap: 18px;
+}
+
+.project-card {
+  display: grid;
+  gap: 18px;
+  min-height: 220px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  padding: clamp(24px, 4vw, 38px);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 45%),
+    #080808;
+  text-decoration: none;
+  transition:
+    border-color 180ms ease,
+    transform 180ms ease,
+    background-color 180ms ease;
+}
+
+.project-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(217, 255, 248, 0.58);
+  background-color: #0d0d0d;
+}
+
+.project-status {
+  width: fit-content;
+  border: 1px solid rgba(217, 255, 248, 0.42);
+  border-radius: 999px;
+  padding: 7px 12px;
+  color: #d9fff8;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.project-card strong {
+  color: #ffffff;
+  font-size: clamp(30px, 4vw, 52px);
+  line-height: 1.06;
+}
+
+.project-description {
+  max-width: 620px;
+  color: #d6d6cf;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.project-tags span {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  padding: 7px 12px;
+  color: #c9cbc4;
+  font-size: 13px;
+  line-height: 1;
+}
+
 .avatar {
   display: grid;
   width: 190px;
@@ -341,6 +449,11 @@ h2 {
   .profile {
     grid-template-columns: 1fr;
     gap: 36px;
+  }
+
+  .projects {
+    grid-template-columns: 1fr;
+    gap: 28px;
   }
 
   .avatar {

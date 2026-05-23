@@ -2,6 +2,12 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
+  nitro: {
+    prerender: {
+      crawlLinks: false,
+      routes: ['/']
+    }
+  },
   app: {
     head: {
       title: '李俊祥 - 前端开发工程师',
